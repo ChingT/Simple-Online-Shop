@@ -26,6 +26,8 @@ export default function Header() {
       ) : (
         <>
           <NavLink to="/login">Login</NavLink>
+          <NavLink to="/register">Register</NavLink>
+          <NavLink to="/validate">Validate</NavLink>
         </>
       )}
     </header>

@@ -9,8 +9,17 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
+main {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 header {
-  height: 80px;
+  height: 10vh;
   background-color: goldenrod;
   width: 100%;
   display: flex;
@@ -37,7 +46,7 @@ header a:hover {
   color: black;
 }
 
-form#login {
+form {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -46,8 +55,8 @@ form#login {
   width: 200px;
 }
 
-form#login input,
-form#login button {
+form input,
+form button {
   width: 100%;
   height: 30px;
 }
@@ -71,4 +80,8 @@ form#login button {
   border: 1px lightsalmon solid;
   width: 100%;
   border-radius: 4px;
+}
+
+a {
+  text-decoration: inherit;
 }
