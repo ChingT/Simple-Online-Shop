@@ -5,6 +5,8 @@ import Layout from "./Layout";
 import Dashboard from "./Dashboard";
 import Account from "./Account";
 import ProtectedRoutes from "./ProtectedRoutes";
+import Register from "./Register";
+import Validate from "./Validate";
 
 export default function Router() {
   return (
@@ -13,6 +15,8 @@ export default function Router() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/validate" element={<Validate />} />
 
           <Route element={<ProtectedRoutes />}>
             <Route path="/dashboard" element={<Dashboard />} />
