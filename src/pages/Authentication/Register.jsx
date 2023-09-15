@@ -6,8 +6,7 @@ import useFetch from "../../hooks/useFetch";
 
 export default function Register() {
   const [data, setData] = useState({ email: "" });
-  const [config, setConfig] = useState(null);
-  const { resData, error } = useFetch(motionAPI, config);
+  const { sendRequest, resData, error } = useFetch(motionAPI);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -16,7 +15,7 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setConfig({ method: "post", url: "/auth/registration/", data });
+    sendRequest({ method: "post", url: "/auth/registration/", data });
   };
 
   return (

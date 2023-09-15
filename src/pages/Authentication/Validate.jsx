@@ -14,8 +14,7 @@ export default function Validate() {
     first_name: "",
     last_name: "",
   });
-  const [config, setConfig] = useState(null);
-  const { resData, error } = useFetch(motionAPI, config);
+  const { sendRequest, resData, error } = useFetch(motionAPI);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,7 +23,11 @@ export default function Validate() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setConfig({ method: "patch", url: "/auth/registration/validation/", data });
+    sendRequest({
+      method: "patch",
+      url: "/auth/registration/validation/",
+      data,
+    });
   };
 
   return (

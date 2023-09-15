@@ -12,8 +12,7 @@ export default function Login() {
   const location = useLocation();
 
   const [data, setData] = useState({ email: "", password: "" });
-  const [config, setConfig] = useState(null);
-  const { resData, loading, error } = useFetch(motionAPI, config);
+  const { sendRequest, resData, loading, error } = useFetch(motionAPI);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -22,7 +21,7 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setConfig({ method: "post", url: "/auth/token/", data });
+    sendRequest({ method: "post", url: "/auth/token/", data });
   };
 
   useEffect(() => {
@@ -32,7 +31,7 @@ export default function Login() {
       localStorage.setItem("accessToken", resData.access);
       navigate(location.state?.origin || "/account");
     }
-  }, [resData, dispatch, loading, location.state, navigate]);
+  }, [resData, dispatch, loading, location, navigate]);
 
   return (
     <>

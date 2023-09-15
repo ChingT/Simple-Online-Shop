@@ -7,18 +7,17 @@ import "./index.css";
 export default function Catalog() {
   const [products, setProducts] = useState([]);
 
-  const [config, setConfig] = useState(null);
-  const { resData } = useFetch(DummyJsonAPI, config);
+  const { sendRequest, resData } = useFetch(DummyJsonAPI);
 
   useEffect(() => {
-    setConfig({ method: "get", url: "/products", params: { limit: 12 } });
-  }, []);
+    sendRequest({ method: "get", url: "/products", params: { limit: 12 } });
+  }, [sendRequest]);
 
   useEffect(() => {
     if (resData) setProducts(resData.products);
   }, [resData]);
 
-  if (!products) return <h2>Loading posts...</h2>;
+  if (!products) return <h2>Loading Catalog...</h2>;
 
   return (
     <div id="products">

@@ -1,30 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function useFetch(api, config) {
+export default function useFetch(api) {
   const [resData, setResData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log("config", config);
-      setResData(null);
-      setError(null);
+  const sendRequest = async ({method, url, data, headers, params}) => {
+    console.log({ method, url, data, headers });
+    try {
       setLoading(true);
-      try {
-        const result = await api.request(config);
-        console.log("result", result);
-        setResData(result.data);
-      } catch (e) {
-        console.log("error", e.response.data);
-        setError(Object.values(e.response.data).flat());
-      } finally {
-        setLoading(false);
-      }
-    };
+      const result = await api.request({ method, url, data, headers, params });
+      console.log("result", result);
+      setResData(result.data);
+    } catch (e) {
+      console.log("error", e.response.data);
+      setError(Object.values(e.response.data).flat());
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    if (config) fetchData();
-  }, [api, config]);
-
-  return { resData, loading, error };
+  return { sendRequest, resData, loading, error };
 }
