@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motionAPI } from "../../axios";
 import FormInput from "../../components/FormInput";
@@ -12,7 +12,7 @@ export default function Login() {
   const location = useLocation();
 
   const [data, setData] = useState({ email: "", password: "" });
-  const { sendRequest, resData, loading, error } = useFetch(motionAPI);
+  const { sendRequest, resData, error } = useFetch(motionAPI);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -29,9 +29,13 @@ export default function Login() {
       dispatch(login(resData.access));
       dispatch(loadUser(resData.user));
       localStorage.setItem("accessToken", resData.access);
-      navigate(location.state?.origin || "/account");
     }
-  }, [resData, dispatch, loading, location, navigate]);
+  }, [dispatch, resData]);
+
+  const isAuthenticated = useSelector((state) => state.user.accessToken);
+  useEffect(() => {
+    if (isAuthenticated) navigate(location.state?.origin || "/");
+  }, [isAuthenticated, location, navigate]);
 
   return (
     <>
