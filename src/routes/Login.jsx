@@ -1,61 +1,59 @@
-import { useState } from "react";
-import { api } from "../axios";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { login, loadUser } from "../store/slices/user";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import userData from "../../user.json";
 import FormInput from "../components/FormInput";
+import useFetch from "../hooks/useFetch";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [error, setError] = useState([]);
+
   const [data, setData] = useState({
     email: userData.email,
     password: userData.password,
   });
+  const [config, setConfig] = useState(null);
+  const { resData, loading, error } = useFetch(config);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setData((prevProps) => ({ ...prevProps, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      const res = await api.post("/auth/token/", data);
-      console.log('api.post "/auth/token/"', res);
-      dispatch(login(res.data.access));
-      dispatch(loadUser(res.data.user));
-      localStorage.setItem("accessToken", res.data.access);
-      setError("");
-      const target = location.state?.from || "/account";
-      console.log("location.state", location.state);
-      console.log("navigate to", target);
-      navigate(target);
-    } catch (e) {
-      console.log('api.post "/auth/token/" error', e);
-      setError(Object.values(e.response.data));
-    }
+    setConfig({ method: "post", url: "/auth/token/", data });
   };
+
+  useEffect(() => {
+    if (resData) {
+      dispatch(login(resData.access));
+      dispatch(loadUser(resData.user));
+      localStorage.setItem("accessToken", resData.access);
+      navigate(location.state?.origin || "/account");
+    }
+  }, [resData, dispatch, loading, location.state, navigate]);
 
   return (
     <>
       <h2>Log in</h2>
 
-      <form id="login" onSubmit={(e) => handleSubmit(e)}>
+      <form id="login" onSubmit={handleSubmit}>
         {FormInput("email", data.email, handleChange, "email")}
         {FormInput("password", data.password, handleChange, "password")}
 
         <button type="submit">Submit</button>
-        {error.map((err) => (
+      </form>
+
+      {error &&
+        error.map((err) => (
           <p key={err} className="errorText">
             {err}
           </p>
         ))}
-      </form>
 
       <div className="hint">
         <div>Do not have an account?</div>

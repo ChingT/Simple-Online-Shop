@@ -1,35 +1,21 @@
 import { useState } from "react";
-import { api } from "../axios";
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
-import { useDispatch } from "react-redux";
-import { setEmail } from "../store/slices/registration";
+import useFetch from "../hooks/useFetch";
 
 export default function Register() {
-  const dispatch = useDispatch();
-  const [error, setError] = useState([]);
-  const [successful, setSuccessful] = useState(false);
-  const [data, setData] = useState({ email: "123@123.123" });
+  const [data, setData] = useState({ email: "" });
+  const [config, setConfig] = useState(null);
+  const { resData, error } = useFetch(config);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setData((prevProps) => ({ ...prevProps, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(setEmail(data.email));
-
-    try {
-      const res = await api.post("/auth/registration/", data);
-      console.log("api.post /auth/registration/", res);
-      setError("");
-      setSuccessful(true);
-    } catch (e) {
-      console.log("api.post /auth/registration/ error", e.response);
-      setError(Object.values(e.response.data));
-      setSuccessful(false);
-    }
+    setConfig({ method: "post", url: "/auth/registration/", data });
   };
 
   return (
@@ -40,14 +26,16 @@ export default function Register() {
         {FormInput("email", data.email, handleChange, "email")}
 
         <button type="submit">Submit</button>
-        {error.map((err) => (
+      </form>
+
+      {error &&
+        error.map((err) => (
           <p key={err} className="errorText">
             {err}
           </p>
         ))}
-      </form>
 
-      {successful && (
+      {resData !== null && (
         <div className="hint">
           <div>The validation code has been sent to your email address.</div>
           <Link to="/validate">Activate your account</Link>
