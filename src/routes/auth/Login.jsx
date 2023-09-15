@@ -1,20 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { login, loadUser } from "../store/slices/user";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import userData from "../../user.json";
-import FormInput from "../components/FormInput";
-import useFetch from "../hooks/useFetch";
+import FormInput from "../../components/FormInput";
+import useFetch from "../../hooks/useFetch";
+import { loadUser, login } from "../../store/slices/user";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [data, setData] = useState({
-    email: userData.email,
-    password: userData.password,
-  });
+  const [data, setData] = useState({ email: "", password: "" });
   const [config, setConfig] = useState(null);
   const { resData, loading, error } = useFetch(config);
 
