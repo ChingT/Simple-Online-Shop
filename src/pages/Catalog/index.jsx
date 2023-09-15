@@ -4,7 +4,7 @@ import Product from "../../components/Product";
 import useFetch from "../../hooks/useFetch";
 import "./index.css";
 
-export default function Products() {
+export default function Catalog() {
   const [products, setProducts] = useState([]);
 
   const [config, setConfig] = useState(null);
