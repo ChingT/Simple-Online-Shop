@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { api } from "../axios";
 
-export default function useFetch(config) {
+export default function useFetch(api, config) {
   const [resData, setResData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +24,7 @@ export default function useFetch(config) {
     };
 
     if (config) fetchData();
-  }, [config]);
+  }, [api, config]);
 
   return { resData, loading, error };
 }

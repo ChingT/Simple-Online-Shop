@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { motionAPI } from "../../axios";
 import FormInput from "../../components/FormInput";
 import useFetch from "../../hooks/useFetch";
 
 export default function Register() {
   const [data, setData] = useState({ email: "" });
   const [config, setConfig] = useState(null);
-  const { resData, error } = useFetch(config);
+  const { resData, error } = useFetch(motionAPI, config);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

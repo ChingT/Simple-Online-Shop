@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { motionAPI } from "../../axios";
 import FormInput from "../../components/FormInput";
 import useFetch from "../../hooks/useFetch";
 import { loadUser, login } from "../../store/slices/user";
@@ -12,7 +13,7 @@ export default function Login() {
 
   const [data, setData] = useState({ email: "", password: "" });
   const [config, setConfig] = useState(null);
-  const { resData, loading, error } = useFetch(config);
+  const { resData, loading, error } = useFetch(motionAPI, config);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

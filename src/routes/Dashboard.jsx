@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { motionAPI } from "../axios";
 import useFetch from "../hooks/useFetch";
 
 export default function Dashboard() {
@@ -7,7 +8,7 @@ export default function Dashboard() {
   const [posts, setPosts] = useState([]);
 
   const [config, setConfig] = useState(null);
-  const { resData } = useFetch(config);
+  const { resData } = useFetch(motionAPI, config);
 
   useEffect(() => {
     setConfig({

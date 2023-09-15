@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
+import { motionAPI } from "./axios";
 import useFetch from "./hooks/useFetch";
 import Router from "./routes";
 import { login, logout } from "./store/slices/user";
@@ -11,7 +12,7 @@ function App() {
   const dispatch = useDispatch();
 
   const [config, setConfig] = useState(null);
-  const { resData, error } = useFetch(config);
+  const { resData, error } = useFetch(motionAPI, config);
 
   const token = localStorage.getItem("accessToken");
 
