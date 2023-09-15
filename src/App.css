@@ -85,5 +85,11 @@ form button {
 }
 
 a {
-  text-decoration: inherit;
+  color: inherit;
+}
+
+.hint {
+  text-align: center;
+  color: brown;
+  line-height: 2rem;
 }
