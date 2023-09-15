@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import "./App.css";
-import Router from "./routes";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "./store/slices/user";
+import "./App.css";
 import useFetch from "./hooks/useFetch";
+import Router from "./routes";
+import { login, logout } from "./store/slices/user";
 
 function App() {
   const accessToken = useSelector((state) => state.user.accessToken);

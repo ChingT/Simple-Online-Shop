@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../axios";
 
 export default function useFetch(config) {

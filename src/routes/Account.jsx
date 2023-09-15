@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadUser } from "../store/slices/user";
 import useFetch from "../hooks/useFetch";
+import { loadUser } from "../store/slices/user";
 
 export default function Account() {
   const token = useSelector((state) => state.user.accessToken);

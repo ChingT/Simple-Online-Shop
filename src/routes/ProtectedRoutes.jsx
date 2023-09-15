@@ -9,5 +9,5 @@ export default function ProtectedRoutes() {
   console.log(`ProtectedRoutes Is logged in ? ${isAuthenticated}`);
 
   if (isAuthenticated) return <Outlet />;
-  return <Navigate to="/login" replace state={{ from: location }} />;
+  return <Navigate to="/login" state={{ origin: location.pathname }} />;
 }
