@@ -11,7 +11,7 @@ export default function Catalog() {
 
   useEffect(() => {
     sendRequest({ method: "get", url: "/products", params: { limit: 12 } });
-  }, [sendRequest]);
+  }, []);
 
   useEffect(() => {
     if (resData) setProducts(resData.products);
