@@ -19,7 +19,6 @@ export default function Header() {
       <NavLink to="/">Home</NavLink>
       {isAuthenticated ? (
         <>
-          <NavLink to="/dashboard">Dashboard</NavLink>
           <NavLink to="/account">Account</NavLink>
           <a onClick={(e) => handleLogout(e)}>Logout</a>
         </>
@@ -27,7 +26,6 @@ export default function Header() {
         <>
           <NavLink to="/login">Login</NavLink>
           <NavLink to="/register">Register</NavLink>
-          <NavLink to="/validate">Validate</NavLink>
         </>
       )}
     </header>

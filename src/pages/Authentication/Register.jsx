@@ -37,10 +37,14 @@ export default function Register() {
 
       {resData !== null && (
         <div className="hint">
+          <div>You have successfully registered.</div>
           <div>The validation code has been sent to your email address.</div>
-          <Link to="/validate">Activate your account</Link>
         </div>
       )}
+
+      <div className="hint">
+        <Link to="/validate">Activate your account here</Link>
+      </div>
     </>
   );
 }
