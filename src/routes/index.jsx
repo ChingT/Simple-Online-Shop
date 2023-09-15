@@ -4,6 +4,7 @@ import Login from "../pages/Authentication/Login";
 import Register from "../pages/Authentication/Register";
 import Validate from "../pages/Authentication/Validate";
 import Catalog from "../pages/Catalog";
+import NotFoundPage from "../pages/NotFoundPage";
 import Layout from "./Layout";
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -20,6 +21,8 @@ export default function Router() {
           <Route element={<ProtectedRoutes />}>
             <Route path="/account" element={<Account />} />
           </Route>
+
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
