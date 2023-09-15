@@ -1,31 +1,43 @@
-import { useEffect } from "react";
-import "./App.css";
-import Router from "./routes";
-import { api } from "./axios";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import "./App.css";
+import { motionAPI } from "./axios";
+import useFetch from "./hooks/useFetch";
+import Router from "./routes";
 import { login, logout } from "./store/slices/user";
 
 function App() {
-  const dispatch = useDispatch();
   const accessToken = useSelector((state) => state.user.accessToken);
+  console.log("accessToken", accessToken);
+  const dispatch = useDispatch();
+
+  const [config, setConfig] = useState(null);
+  const { resData, error } = useFetch(motionAPI, config);
+
+  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
-    const localToken = localStorage.getItem("accessToken");
-    console.log("localToken in App.jsx?", localToken);
-
-    if (localToken) {
-      api
-        .post("/auth/token/verify/", { token: localToken })
-        .then(() => dispatch(login(localToken)))
-        .catch((e) => {
-          console.log("/auth/token/verify/?", e);
-          localStorage.removeItem("accessToken");
-          dispatch(logout());
-        });
+    if (token) {
+      setConfig({
+        method: "post",
+        url: "/auth/token/verify/",
+        data: { token },
+      });
     } else {
       dispatch(logout());
     }
-  }, [dispatch]);
+  }, [dispatch, token]);
+
+  useEffect(() => {
+    if (resData !== null) dispatch(login(token));
+  }, [dispatch, resData, token]);
+
+  useEffect(() => {
+    if (error) {
+      localStorage.removeItem("accessToken");
+      dispatch(logout());
+    }
+  }, [dispatch, error]);
 
   if (accessToken || accessToken === null) return <Router />;
   return <h2>Loading accessToken...</h2>;

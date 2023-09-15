@@ -1,19 +1,19 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./Home";
-import Login from "./Login";
-import Layout from "./Layout";
-import Dashboard from "./Dashboard";
 import Account from "./Account";
+import Dashboard from "./Dashboard";
+import Layout from "./Layout";
 import ProtectedRoutes from "./ProtectedRoutes";
-import Register from "./Register";
-import Validate from "./Validate";
+import Products from "./Shop/Products";
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import Validate from "./auth/Validate";
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Products />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/validate" element={<Validate />} />

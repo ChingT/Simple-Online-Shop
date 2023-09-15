@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
-import { api } from "../axios";
 import { useSelector } from "react-redux";
+import { motionAPI } from "../axios";
+import useFetch from "../hooks/useFetch";
 
 export default function Dashboard() {
   const token = useSelector((state) => state.user.accessToken);
   const [posts, setPosts] = useState([]);
 
+  const [config, setConfig] = useState(null);
+  const { resData } = useFetch(motionAPI, config);
+
   useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const config = { headers: { Authorization: `Bearer ${token}` } };
-        const res = await api.get("/social/posts/", config);
-        console.log('api.get "/social/posts/"', res);
-        setPosts(res.data.results);
-        console.log("posts", res.data.results);
-      } catch (e) {
-        console.log('api.get "/social/posts/" error', e);
-      }
-    };
-    fetchPost();
+    setConfig({
+      method: "get",
+      url: "/social/posts/",
+      headers: { Authorization: `Bearer ${token}` },
+    });
   }, [token]);
+
+  useEffect(() => {
+    if (resData) setPosts(resData.results);
+  }, [resData]);
 
   if (!posts) return <h2>Loading posts...</h2>;
 

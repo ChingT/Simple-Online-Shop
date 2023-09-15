@@ -1,15 +1,12 @@
 import { useState } from "react";
-import { api } from "../axios";
 import { Link } from "react-router-dom";
-import FormInput from "../components/FormInput";
-import { useSelector } from "react-redux";
+import { motionAPI } from "../../axios";
+import FormInput from "../../components/FormInput";
+import useFetch from "../../hooks/useFetch";
 
 export default function Validate() {
-  const email = useSelector((state) => state.registration.email);
-  const [error, setError] = useState([]);
-  const [successful, setSuccessful] = useState(false);
   const [data, setData] = useState({
-    email: email,
+    email: "",
     username: "",
     code: "",
     password: "",
@@ -17,31 +14,23 @@ export default function Validate() {
     first_name: "",
     last_name: "",
   });
+  const [config, setConfig] = useState(null);
+  const { resData, error } = useFetch(motionAPI, config);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setData((prevProps) => ({ ...prevProps, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      const res = await api.patch("/auth/registration/validation/", data);
-      console.log("api.patch /auth/registration/validation", res);
-      setError("");
-      setSuccessful(true);
-    } catch (e) {
-      console.log("api.post /auth/registration/validation error", e.response);
-      setError(Object.values(e.response.data));
-      setSuccessful(false);
-    }
+    setConfig({ method: "patch", url: "/auth/registration/validation/", data });
   };
 
   return (
     <>
       <h2>Activate account</h2>
-      <h3>The validation code has been sent to your email address</h3>
+      <h3>Checkout your Email for the validation code.</h3>
 
       <form onSubmit={handleSubmit}>
         {FormInput("email", data.email, handleChange, "email")}
@@ -58,14 +47,16 @@ export default function Validate() {
         {FormInput("last_name", data.last_name, handleChange)}
 
         <button type="submit">Submit</button>
-        {error.map((err) => (
+      </form>
+
+      {error &&
+        error.map((err) => (
           <p key={err} className="errorText">
             {err}
           </p>
         ))}
-      </form>
 
-      {successful && (
+      {resData !== null && (
         <div className="hint">
           <div>The account has been successfully activated.</div>
           <Link to="/login">Log in.</Link>
