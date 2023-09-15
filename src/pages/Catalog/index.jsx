@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { DummyJsonAPI } from "../../axios";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import Product from "../../components/Product";
 import useFetch from "../../hooks/useFetch";
 import "./index.css";
@@ -17,7 +18,7 @@ export default function Catalog() {
     if (resData) setProducts(resData.products);
   }, [resData]);
 
-  if (!products) return <h2>Loading Catalog...</h2>;
+  if (!products) return <LoadingSpinner />;
 
   return (
     <div id="products">

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motionAPI } from "../axios";
+import LoadingSpinner from "../components/LoadingSpinner";
 import useFetch from "../hooks/useFetch";
 import { loadUser } from "../store/slices/user";
 
@@ -23,7 +24,7 @@ export default function Account() {
     if (resData !== null) dispatch(loadUser(resData));
   }, [dispatch, resData]);
 
-  if (!details) return <h2>Loading user details...</h2>;
+  if (!details) return <LoadingSpinner />;
 
   return (
     <>

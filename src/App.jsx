@@ -1,12 +1,13 @@
 import "./App.css";
+import LoadingSpinner from "./components/LoadingSpinner";
 import useReloadAuth from "./hooks/useReloadAuth";
 import Router from "./routes";
 
 function App() {
   const { loading } = useReloadAuth();
 
-  if (!loading) return <Router />;
-  return <h2>Loading accessToken...</h2>;
+  if (loading) return <LoadingSpinner />;
+  return <Router />;
 }
 
 export default App;
