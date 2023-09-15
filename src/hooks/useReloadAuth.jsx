@@ -20,7 +20,7 @@ export default function useReloadAuth() {
     } else {
       dispatch(logout());
     }
-  }, [dispatch, sendRequest, token]);
+  }, [token]);
 
   useEffect(() => {
     if (resData !== null) {
