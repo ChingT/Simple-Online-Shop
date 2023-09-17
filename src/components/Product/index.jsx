@@ -1,6 +1,14 @@
+import { useDispatch } from "react-redux";
+import { addOneItem } from "../../store/slices/cart";
 import "./index.css";
 
 export default function Product({ product }) {
+  const dispatch = useDispatch();
+  const handleClick = (e) => {
+    e.preventDefault();
+    dispatch(addOneItem(product.id));
+  };
+
   return (
     <div id="product">
       <div className="thumbnail">
@@ -11,7 +19,9 @@ export default function Product({ product }) {
       </div>
       <div className="price">
         <div>{product.price} EUR</div>
-        <div className="add-to-cart">Add To Cart</div>
+        <button id="add-to-cart" onClick={handleClick}>
+          Add To Cart
+        </button>
       </div>
     </div>
   );

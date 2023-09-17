@@ -1,27 +1,28 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Account from "./Account";
-import Dashboard from "./Dashboard";
+import Login from "../pages/Authentication/Login";
+import Register from "../pages/Authentication/Register";
+import Validate from "../pages/Authentication/Validate";
+import Cart from "../pages/Cart";
+import Catalog from "../pages/Catalog";
+import NotFoundPage from "../pages/NotFoundPage";
 import Layout from "./Layout";
 import ProtectedRoutes from "./ProtectedRoutes";
-import Products from "./Shop/Products";
-import Login from "./auth/Login";
-import Register from "./auth/Register";
-import Validate from "./auth/Validate";
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Products />} />
+          <Route path="/" element={<Catalog />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/validate" element={<Validate />} />
 
           <Route element={<ProtectedRoutes />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/account" element={<Account />} />
+            <Route path="/cart" element={<Cart />} />
           </Route>
+
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { motionAPI } from "../../axios";
 import FormInput from "../../components/FormInput";
 import useFetch from "../../hooks/useFetch";
+import "./index.css";
 
 export default function Register() {
   const [data, setData] = useState({ email: "" });
-  const [config, setConfig] = useState(null);
-  const { resData, error } = useFetch(motionAPI, config);
+  const { sendRequest, resData, error } = useFetch(motionAPI);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -16,7 +16,7 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setConfig({ method: "post", url: "/auth/registration/", data });
+    sendRequest({ method: "post", url: "/auth/registration/", data });
   };
 
   return (
@@ -38,10 +38,14 @@ export default function Register() {
 
       {resData !== null && (
         <div className="hint">
+          <div>You have successfully registered.</div>
           <div>The validation code has been sent to your email address.</div>
-          <Link to="/validate">Activate your account</Link>
         </div>
       )}
+
+      <div className="hint">
+        <Link to="/validate">Activate your account here</Link>
+      </div>
     </>
   );
 }

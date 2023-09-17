@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motionAPI } from "../../axios";
 import FormInput from "../../components/FormInput";
 import useFetch from "../../hooks/useFetch";
-import { loadUser, login } from "../../store/slices/user";
+import { login } from "../../store/slices/user";
+import "./index.css";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -12,8 +13,7 @@ export default function Login() {
   const location = useLocation();
 
   const [data, setData] = useState({ email: "", password: "" });
-  const [config, setConfig] = useState(null);
-  const { resData, loading, error } = useFetch(motionAPI, config);
+  const { sendRequest, resData, error } = useFetch(motionAPI);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -22,17 +22,21 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setConfig({ method: "post", url: "/auth/token/", data });
+    sendRequest({ method: "post", url: "/auth/token/", data });
   };
 
   useEffect(() => {
     if (resData) {
-      dispatch(login(resData.access));
-      dispatch(loadUser(resData.user));
+      dispatch(login(resData));
       localStorage.setItem("accessToken", resData.access);
-      navigate(location.state?.origin || "/account");
+      localStorage.setItem("username", resData.user.username);
     }
-  }, [resData, dispatch, loading, location.state, navigate]);
+  }, [dispatch, resData]);
+
+  const isAuthenticated = useSelector((state) => state.user.accessToken);
+  useEffect(() => {
+    if (isAuthenticated) navigate(location.state?.origin || "/");
+  }, [isAuthenticated, location, navigate]);
 
   return (
     <>

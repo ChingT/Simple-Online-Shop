@@ -4,21 +4,19 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     accessToken: undefined,
-    details: null,
+    username: undefined,
   },
   reducers: {
     login: (state, action) => {
-      state.accessToken = action.payload;
+      state.accessToken = action.payload.access;
+      state.username = action.payload.user.username;
     },
     logout: (state) => {
       state.accessToken = null;
-      state.details = null;
-    },
-    loadUser: (state, action) => {
-      state.details = action.payload;
+      state.username = null;
     },
   },
 });
 
-export const { login, logout, loadUser } = userSlice.actions;
+export const { login, logout } = userSlice.actions;
 export default userSlice.reducer;
