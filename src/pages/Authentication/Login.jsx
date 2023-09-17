@@ -4,7 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motionAPI } from "../../axios";
 import FormInput from "../../components/FormInput";
 import useFetch from "../../hooks/useFetch";
-import { loadUser, login } from "../../store/slices/user";
+import { login } from "../../store/slices/user";
+import "./index.css";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -26,9 +27,9 @@ export default function Login() {
 
   useEffect(() => {
     if (resData) {
-      dispatch(login(resData.access));
-      dispatch(loadUser(resData.user));
+      dispatch(login(resData));
       localStorage.setItem("accessToken", resData.access);
+      localStorage.setItem("username", resData.user.username);
     }
   }, [dispatch, resData]);
 
