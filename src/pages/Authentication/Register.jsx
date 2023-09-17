@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motionAPI } from "../../axios";
 import FormInput from "../../components/FormInput";
 import useFetch from "../../hooks/useFetch";
+import "./index.css";
 
 export default function Register() {
   const [data, setData] = useState({ email: "" });

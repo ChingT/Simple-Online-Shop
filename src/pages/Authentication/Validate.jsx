@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motionAPI } from "../../axios";
 import FormInput from "../../components/FormInput";
 import useFetch from "../../hooks/useFetch";
+import "./index.css";
 
 export default function Validate() {
   const [data, setData] = useState({
@@ -32,7 +33,7 @@ export default function Validate() {
 
   return (
     <>
-      <h2>Activate account</h2>
+      <h2>Activate Account</h2>
       <h3>Checkout your Email for the validation code.</h3>
 
       <form onSubmit={handleSubmit}>
@@ -61,7 +62,7 @@ export default function Validate() {
 
       {resData !== null && (
         <div className="hint">
-          <div>The account has been successfully activated.</div>
+          <div>The cart has been successfully activated.</div>
           <Link to="/login">Log in.</Link>
         </div>
       )}
