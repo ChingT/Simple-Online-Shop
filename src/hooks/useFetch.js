@@ -5,8 +5,8 @@ export default function useFetch(api) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const sendRequest = async ({method, url, data, headers, params}) => {
-    console.log({ method, url, data, headers });
+  const sendRequest = async ({ method, url, data, headers, params }) => {
+    console.log({ method, url, data, headers, params });
     try {
       setLoading(true);
       const result = await api.request({ method, url, data, headers, params });

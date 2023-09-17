@@ -8,7 +8,7 @@ export default function useReloadAuth() {
   const dispatch = useDispatch();
   const { sendRequest, resData, error, loading } = useFetch(motionAPI);
   const token = localStorage.getItem("accessToken");
-  console.log("localStorage.accessToken", token);
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     if (token) {
@@ -24,14 +24,15 @@ export default function useReloadAuth() {
 
   useEffect(() => {
     if (resData !== null) {
-      dispatch(login(token));
+      dispatch(login({ access: token, user: { username } }));
     }
-  }, [dispatch, resData, token]);
+  }, [dispatch, resData, token, username]);
 
   useEffect(() => {
     if (error !== null) {
       dispatch(logout());
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("username");
     }
   }, [dispatch, error]);
 
