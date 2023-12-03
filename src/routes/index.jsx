@@ -10,7 +10,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 
 export default function Router() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Simple-Online-Shop">
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Catalog />} />
